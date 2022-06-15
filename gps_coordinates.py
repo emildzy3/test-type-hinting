@@ -3,6 +3,7 @@ from typing import Literal
 
 import requests
 
+from config import API_COORDINATE
 from exception import CantGetCoordinates
 
 
@@ -26,8 +27,7 @@ def _get_coordinates_from_api() -> Coordinate:
 
 
 def _get_data_api() -> bytes:
-    source_data_coordinates = 'http://ipinfo.io/'
-    server_request = requests.get(source_data_coordinates)
+    server_request = requests.get(API_COORDINATE)
     if not server_request.ok:
         raise CantGetCoordinates
     return server_request.content
