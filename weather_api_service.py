@@ -14,7 +14,7 @@ from gps_coordinates import Coordinate
 Celsius: TypeAlias = int
 
 
-class WeatherType(Enum):
+class WeatherType(str, Enum):
     THUNDERSTORM = "Гроза"
     DRIZZLE = "Изморось"
     RAIN = "Дождь"
