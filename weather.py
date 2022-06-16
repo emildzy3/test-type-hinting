@@ -25,7 +25,7 @@ def main():
             PlainFileWeatherStorage(Path.cwd() / "history.txt")
         )
     except CantSaveWeather:
-        print(f'Не удалось сохранить погоду в директории {Path}. Ошибка прав доступа')
+        print(f'Не удалось сохранить погоду в директории {Path.cwd()}. Ошибка прав доступа')
         exit(1)
 
 
