@@ -1,0 +1,36 @@
+import select
+from datetime import datetime
+from pathlib import Path
+from typing import Protocol
+
+from exception import CantSaveWeather
+from weather_api_service import Weather
+from weather_formatter import print_weather
+
+
+class WeatherStorage(Protocol):
+    """Interface for any storage saving weather"""
+
+    def save(self, weather: Weather) -> None:
+        raise NotImplementedError
+
+
+class PlainFileWeatherStorage:
+    """Store weather in plain text file"""
+
+    def __init__(self, file: Path):
+        self._file = file
+
+    def save(self, weather: Weather) -> None:
+        now = datetime.now()
+        formatted_weather = print_weather(weather)
+        try:
+            with open(self._file, "a") as f:
+                f.write(f"{now}\n{formatted_weather}\n")
+        except PermissionError:
+            raise CantSaveWeather
+
+
+def save_weather(weather: Weather, storage: WeatherStorage) -> None:
+    """Saves weather in the storage"""
+    storage.save(weather)
